@@ -1,0 +1,11 @@
+---
+title: "stl_lead_inequity.qmd"
+author: "Alex Reed"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(janitor)
+```
