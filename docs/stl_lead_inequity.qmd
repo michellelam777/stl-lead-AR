@@ -8,4 +8,61 @@ editor: visual
 ```{r}
 library(tidyverse)
 library(janitor)
+library(here)
+library(skimr)
+library(dplyr)
+```
+
+```{r}
+stl_lead <- read_csv(here::here("data",
+                                "stl_blood_lead.csv")) %>%
+  clean_names()
+                              
+```
+
+```{r}
+
+stl_lead_prop <- stl_lead %>%
+  
+dplyr::mutate(prop_white = (white/ total_pop) * 100)
+```
+
+```{r}
+stl_lead_plot <- ggplot(data = stl_lead_prop,
+                       aes(x = pct_elevated, 
+                           y = prop_white)) +
+  labs(x = "Percent Elevated", 
+       y = "Percent White",
+       title = "Percent Elevated vs Percent White") +
+                         
+  geom_point(color = "purple")
+
+stl_lead_plot
+```
+
+```{r}
+ggsave(plot = stl_lead_plot,
+       here("figs", "stl_lead_plot.png"),
+       width = 6,
+       height = 5)
+
+#percent white tends to decrease as percent elevated increases.
+```
+
+```{r}
+stl_lead_histo <- ggplot(data = stl_lead_prop,
+                       aes(x = pct_elevated)) +
+  labs(x = "Percent Elevated",
+       title = "Percent Elevated ") +
+                         
+  geom_histogram(color = "red", fill = "blue")
+
+stl_lead_histo
+```
+
+```{r}
+ggsave(plot = stl_lead_histo,
+       here("figs", "stl_lead_histo.png"),
+       width = 6,
+       height = 5)
 ```
